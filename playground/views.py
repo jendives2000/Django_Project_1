@@ -1,3 +1,17 @@
+# imported by default
 from django.shortcuts import render
 
-# Create your views here.
+# imported for this project:
+from django.http import HttpResponse
+
+# -----------------------------------------------------------------------------
+
+
+def hello(request):
+    # pull data from database
+    # transform data
+    # send email
+    # and a lot more
+
+    # output an instance of the response when responding to the request (HTTP protocol)
+    return HttpResponse("Hello, world. This is an HTTP Response.")
