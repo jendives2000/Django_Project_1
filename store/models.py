@@ -10,8 +10,18 @@ class Promotion(models.Model):
 
 
 class Collection(models.Model):
+    # !! DEPENDENCY -- 1 -- : 1toM !!:
     title = models.CharField(max_length=255)
     description = models.TextField()
+    # CIRCULAR DEPENDENCY: MtoM !! :
+    # put the dependee in "":
+    # !!! dependee is now HARD CODED
+    featured_product = models.ForeignKey(
+        "Product",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="+",
+    )
 
 
 class Product(models.Model):
@@ -21,6 +31,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.IntegerField()
     last_updated = models.DateTimeField(auto_now=True)
+    # !! DEPENDENCY -- 1 -- : Mto1 !!:
     # Deleting a collection SHOULD NOT delete all its products
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     promotions = models.ManyToManyField(Promotion, related_name="promoted_products")
@@ -33,9 +44,9 @@ class Customer(models.Model):
     MEMBERSHIP_GOLD = "G"
 
     MEMBERSHIP_CHOICES = [
-        ("MEMBERSHIP_BRONZE", "Bronze"),
-        ("MEMBERSHIP_SILVER", "Silver"),
-        ("MEMBERSHIP_GOLD", "Gold"),
+        (MEMBERSHIP_BRONZE, "Bronze"),
+        (MEMBERSHIP_SILVER, "Silver"),
+        (MEMBERSHIP_GOLD, "Gold"),
     ]
     first_name = models.CharField(max_length=55)
     last_name = models.CharField(max_length=55)
@@ -43,9 +54,10 @@ class Customer(models.Model):
     phone = models.CharField(max_length=12)
     birth_date = models.DateField(null=True, blank=True)
     membership = models.CharField(
-        max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE
+        max_length=1,
+        choices=MEMBERSHIP_CHOICES,
+        default=MEMBERSHIP_BRONZE,
     )
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
 
 class Order(models.Model):
@@ -54,9 +66,9 @@ class Order(models.Model):
     PAYMENT_STATUS_FAILED = "F"
 
     PAYMENT_STATUSES = [
-        ("PAYMENT_STATUS_PENDING", "Pending"),
-        ("PAYMENT_STATUS_COMPLETED", "Completed"),
-        ("PAYMENT_STATUS_FAILED", "Failed"),
+        (PAYMENT_STATUS_PENDING, "Pending"),
+        (PAYMENT_STATUS_COMPLETED, "Completed"),
+        (PAYMENT_STATUS_FAILED, "Failed"),
     ]
     placed_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(
@@ -88,7 +100,7 @@ class OrderItem(models.Model):
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
 
 
 class CartItem(models.Model):
