@@ -18,4 +18,4 @@ def hello(request):
     # return HttpResponse("Hello, world. This is an HTTP Response.")
 
     # renders the HTML template that is passed as an argument
-    return render(request, "hello.html")
+    return render(request, "hello.html", {"name": "Jy"})

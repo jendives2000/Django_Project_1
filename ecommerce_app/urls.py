@@ -16,10 +16,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+import debug_toolbar
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # this is handling all Requests starting with the prefix http://playground/
     # the rest is handled by urls.py in playground folder
     path("playground/", include("playground.urls")),
+    # for django-debug-toolbar
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
