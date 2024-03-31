@@ -60,10 +60,9 @@ class Customer(models.Model):
         default=MEMBERSHIP_BRONZE,
     )
 
-
-class Meta:
-    db_tables = "store_customers"
-    indexes = [models.Index(fields=["last_name", "first_name"])]
+    class Meta:
+        db_tables = "store_customers"
+        indexes = [models.Index(fields=["last_name", "first_name"])]
 
 
 class Order(models.Model):
