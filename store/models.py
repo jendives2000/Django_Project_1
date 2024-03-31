@@ -15,12 +15,12 @@ class Collection(models.Model):
     description = models.TextField()
     # CIRCULAR DEPENDENCY: MtoM !! :
     # put the dependee in "":
-    # !!! dependee is now HARD CODED
+    # !!! dependee is now HARD CODED (if its class name changes, it wont be updated accordingly)
     featured_product = models.ForeignKey(
         "Product",
         on_delete=models.SET_NULL,
         null=True,
-        related_name="+",
+        related_name="+",  # prevents creation of an additional collection reverse relationship in class Product.
     )
 
 
@@ -28,6 +28,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     slug = models.SlugField()
+    # max_digits = num of digits before decimals.
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.IntegerField()
     last_updated = models.DateTimeField(auto_now=True)
@@ -78,7 +79,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
 
-class address(models.Model):
+class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
