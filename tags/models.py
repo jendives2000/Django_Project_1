@@ -3,11 +3,11 @@
 # This is why we use the default app contenttype (#1).
 
 # NOTE:
-# This will NOT work with GUID type ID because they are not integers.
+# !! This will NOT work with GUID type ID because they are not integers.
 
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType  # 1
+from django.contrib.contenttypes.fields import GenericForeignKey  # 3
 
 
 class Tag(models.Model):
@@ -21,6 +21,6 @@ class TaggedItem(models.Model):
     # Type: could be anything: product, video, article, etc.
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)  # 1
     # ID:
-    object_id = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField()  # !! see NOTE above
     # get the actual product or object name
-    actual_object = GenericForeignKey()
+    actual_object = GenericForeignKey()  # 3
