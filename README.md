@@ -36,4 +36,6 @@ After I compared my code to the solutions:
 
 #### Resources:
 [Code with Mosh Online Course: Ultimate Django](codewithmosh.com/courses/the-ultimate-django-part1-1)  
+[DataGrip from Jetbrains](https://www.jetbrains.com/datagrip/download/download-thanks.html?platform=windows)  
+[MySQL](https://dev.mysql.com/downloads/windows/)  
 
