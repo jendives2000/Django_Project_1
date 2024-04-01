@@ -9,9 +9,12 @@ text
 
 ---
 
-## Title 2
+## Introduction to MYSQL
 
-text
+Here I only just touched the surface of Databases. Installing MYSQL and DataGrip and creating a new database in DataGrip.  
+Why DataGrip? Just because the course I am following is using it. But MYSQL Workbench is an alternative (though less optimal, according to the course). 
+
+![A new DB created in DataGrip](image.png)
 
 --- 
 
